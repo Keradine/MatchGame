@@ -34,7 +34,7 @@ namespace MatchGame
             SetUpGame();
         }
 
-        private void Timer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object sender, EventArgs e) //Object Sender is a parameter called Sender that contains a reference to the control/object that raised the event.
         {
             tenthsOfSecondsElapsed++;
             timeTextBlock.Text = (tenthsOfSecondsElapsed / 10F).ToString("0.0s");
