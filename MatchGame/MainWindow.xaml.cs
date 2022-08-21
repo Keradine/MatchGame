@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace MatchGame
@@ -59,16 +51,16 @@ namespace MatchGame
                 "🐱", "🐱",
             };
 
-            Random random = new Random(); //create a new random number generator
+            Random random = new Random(); //create a new random number generator, создает новый генератор случайных чисел
 
-            foreach (TextBlock textBlock in mainGrid.Children.OfType<TextBlock>()) // Find every TextBlock in the main grid and repeat the following statement for each of them
+            foreach (TextBlock textBlock in mainGrid.Children.OfType<TextBlock>()) // Find every TextBlock in the main grid and repeat the following statement for each of them, находит каждый элемент TextBlock в сетке и повторяет следующие команды для каждого элемента
             {
                 if (textBlock.Name != "timeTextBlock")
                 {
                     textBlock.Visibility = Visibility.Visible;
-                    int index = random.Next(animalEmoji.Count); // pick a random number between 0 and the number of emoji left in the list and call it "index"
-                    string nextEmoji = animalEmoji[index]; //use the random number called "index" to get a random emoji from the list
-                    textBlock.Text = nextEmoji; //update the TextBlock with the random emoji from the list
+                    int index = random.Next(animalEmoji.Count); // pick a random number between 0 and the number of emoji left in the list and call it "index", выбирает случайное число от 0 до количества эмодзи в списке и назначает ему имя "index"
+                    string nextEmoji = animalEmoji[index]; //use the random number called "index" to get a random emoji from the list, использует случайное число с именем "index" для получания случайного эмодзи из списка
+                    textBlock.Text = nextEmoji; //update the TextBlock with the random emoji from the list, обновляет TextBlock случайным эмодзи из списка
                     animalEmoji.RemoveAt(index); //remove the random emoji from the list.
                 }
             }
@@ -79,24 +71,24 @@ namespace MatchGame
         }
 
         TextBlock lastTextBlockClicked;
-        bool findingMatch = false;
+        bool findingMatch = false; //этот признак определяет, щелкнул ли игрок на первом животном в паре, и теперь пытается найти для него пару
 
         private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
         {
             TextBlock textBlock = sender as TextBlock;
-            if (findingMatch == false)
+            if (findingMatch == false) //игрок только что щелкнул на первом животном в паре, поэтому это животное становится невидимым, а соответствующий элемент TextBlock сохраняется на случай, если его придется делать видимым снова;
             {
                 textBlock.Visibility = Visibility.Hidden;
                 lastTextBlockClicked = textBlock;
                 findingMatch = true;
             }
-            else if (textBlock.Text == lastTextBlockClicked.Text)
+            else if (textBlock.Text == lastTextBlockClicked.Text) //игрок нашел пару, второе животное в паре становится невидимым, а признак findingMatch сбрасывается, чтобы следующее животное, на котором щелкнет игрок, снова считалось первым в паре;
             {
                 matchesFound++;
                 textBlock.Visibility = Visibility.Hidden;
                 findingMatch = false;
             }
-            else
+            else //игрок щелкнул на животном, которое не совпадает с первым, поэтому первое выбранное животное снова становится видимым, а признак findingMatch сбрасывается;
             {
                 lastTextBlockClicked.Visibility = Visibility.Visible;
                 findingMatch = false;
