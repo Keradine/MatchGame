@@ -97,7 +97,7 @@ namespace MatchGame
 
         private void TimeTextBlock_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (matchesFound == 8)
+            if (matchesFound == 8) //сбрасывает игру, если были найдены все 8 пар (в противном случае ничего не делает, потому что игра еще продолжается)
             {
                 SetUpGame();
             }
